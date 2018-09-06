@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-from random import random
-import pyaudio
 import math
+import pyaudio
 from array import array
+from numbers import Number
+
 
 player = pyaudio.PyAudio()
 
@@ -41,6 +42,9 @@ def play(steps=major_scale, start=3, base=220, duration=1.0, rate=44100, volume=
         rate=rate,
         output=True,
     )
+
+    if isinstance(steps, Number):
+        steps = [steps]
 
     for step in steps:
         freq = frequency(start + step, base)
