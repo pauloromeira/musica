@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from numbers import Number
 from itertools import cycle, islice
 from collections import deque, defaultdict
 
@@ -9,8 +10,14 @@ major_scale = [2,2,1,2,2,2,1]
 # chromatic_scale = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
 
-def semitones(note, scale=major_scale):
-    return sum(s for s in islice(cycle(scale), note-1))
+def semitones(notes, scale=major_scale):
+    def _semitones(note, scale):
+        return sum(s for s in islice(cycle(scale), note-1))
+    if isinstance(notes, Number):
+        return _semitones(notes, scale)
+    else:
+        return [_semitones(note, scale) for note in notes]
+
 
 interval_names = {
     0: 'perfect unison',
