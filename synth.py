@@ -59,6 +59,7 @@ def play(steps=major_scale, start=3, base=220, duration=1.0, rate=44100, volume=
     stream.stop_stream()
     stream.close()
 
-import IPython; IPython.embed()
 
-player.terminate()
+if __name__ == "__main__":
+    import IPython; IPython.embed()
+    player.terminate()
