@@ -50,6 +50,7 @@ while notes:
     stack.appendleft(note)
 
 print('\nTrain')
+training = []
 interval_types = defaultdict(list)
 for combination in combinations:
     distance = semitones(max(combination)) - semitones(min(combination))
@@ -57,6 +58,7 @@ for combination in combinations:
     interval_types[distance].append(sorted(combination))
     if interval_name:
         print(f'{combination} {tuple(reversed(combination))} [{distance}] {interval_name}')
+        training.append((combination, interval_name))
 
 print('\nFrequency')
 for distance, intervals in sorted(interval_types.items(), key=lambda i: len(i[1]), reverse=True):
