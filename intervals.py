@@ -11,33 +11,35 @@ SCALES = {
     'chromatic': (1,) * 12,
 }
 
-INTERVAL_NAMES = {
-    0: 'perfect unison',
-    1: 'minor second',
-    2: 'major second',
-    3: 'minor third',
-    4: 'major third',
-    5: 'perfect fourth',
-    6: 'augmented fourth/diminished fifth', # tritone
-    7: 'perfect fifth',
-    8: 'minor sixth',
-    9: 'major sixth',
-    10: 'minor seventh',
-    11: 'major seventh',
-    12: 'perfect octave',
-}
+INTERVAL_NAMES = [
+    'unison',
+    'minor second',
+    'major second',
+    'minor third',
+    'major third',
+    'perfect fourth',
+    'augmented fourth/diminished fifth', # tritone
+    'perfect fifth',
+    'minor sixth',
+    'major sixth',
+    'minor seventh',
+    'major seventh',
+]
 
 
 def semitones(notes, scale='major'):
-    _semi = lambda note, scale: sum(s for s in islice(cycle(scale), note))
-
     if isinstance(scale, str):
         scale = SCALES[scale]
+
+    _semi = lambda note, scale: sum(s for s in islice(cycle(scale), note))
     if isinstance(notes, Number):
         return _semi(notes, scale)
     else:
         return (_semi(n, scale) for n in notes)
 
 
-def interval_name(semitones):
-    return INTERVAL_NAMES.get(semitones, 'unknown')
+def interval(semitones):
+    intervals_count = len(INTERVAL_NAMES)
+    octaves = semitones // intervals_count
+    interval = semitones % intervals_count if octaves else semitones
+    return INTERVAL_NAMES[interval], octaves

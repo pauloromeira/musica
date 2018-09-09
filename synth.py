@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 import sounddevice as sd
 from utils import frequency, waveform, crossfade
-from intervals import semitones, interval_name
+from intervals import semitones, interval
 
 
 rate = 44100
-duration = 1
+duration = .3
 
 sd.default.samplerate = rate
 
-scale = 'major pentatonic'
+scale = 'major'
 
 print(scale)
-for s in semitones(range(6), scale):
+for s in semitones(range(15), scale):
     f = frequency(s)
-    print(f'{s:02} {f:.2f} Hz : {interval_name(s)}')
+    i = interval(s)
+    print(f'{s:02} {f:.2f} Hz : {i[0]} ({i[1]})')
     wave = waveform(f, rate, duration)
     crossfade(wave)
     sd.play(wave, blocking=True)
