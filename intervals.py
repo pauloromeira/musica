@@ -29,12 +29,14 @@ INTERVAL_NAMES = {
 
 
 def semitones(notes, scale='major'):
+    _semi = lambda note, scale: sum(s for s in islice(cycle(scale), note))
+
     if isinstance(scale, str):
         scale = SCALES[scale]
     if isinstance(notes, Number):
-        notes = [notes]
-
-    return (sum(s for s in islice(cycle(scale), n)) for n in notes)
+        return _semi(notes, scale)
+    else:
+        return (_semi(n, scale) for n in notes)
 
 
 def interval_name(semitones):
