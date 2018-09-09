@@ -3,8 +3,8 @@ import numpy as np
 from numpy import math
 
 
-def frequency(steps, base=440.0):
-    return base * math.pow(2.0, steps/12.0)
+def frequency(steps, start=-9, base=440.0):
+    return base * math.pow(2.0, (start + steps)/12.0)
 
 
 def linspace(start=0.0, stop=1.0, steps=50):
