@@ -7,11 +7,12 @@ def frequency(steps, start=-9, base=440.0):
     return base * math.pow(2.0, (start + steps)/12.0)
 
 
-def crossfade(wave, percent=.2):
+def crossfade(wave, percent=.4):
     n = int(len(wave) * percent / 2)
-    n_sqrt = math.sqrt(n)
+    weight = lambda i: math.pow(i, 3)
+    i_max = weight(n)
     for i in range(n):
-        amp = math.sqrt(i) / n_sqrt
+        amp = weight(i) / i_max
         wave[i] *= amp
         wave[-(i+1)] *= amp
 
