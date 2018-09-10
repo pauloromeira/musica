@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from itertools import chain
 import sounddevice as sd
 import matplotlib.pyplot as plt
 from utils import frequency, waveform, crossfade
@@ -14,12 +15,14 @@ sd.default.samplerate = rate
 scale = 'minor'
 
 print(scale)
-notes = [0,2,4,6]
+chord = [0,2,4]
+octaves = 3
+notes = chain.from_iterable((n+o*7 for n in chord) for o in range(octaves))
 
 wave = None
-amplitude = math.sqrt(volume) / len(notes)
+amplitude = math.sqrt(volume) / (len(chord) * octaves)
 for s in semitones(notes, scale):
-    f = frequency(s)
+    f = frequency(s, base=220)
     i = interval(s)
     print(f'{s:02} {f:.2f} Hz : {i[0]} ({i[1]})')
     w = waveform(f, rate, duration, amplitude)
@@ -29,8 +32,8 @@ for s in semitones(notes, scale):
         wave += w
 
 
-    # sd.play(wave, blocking=True)
 crossfade(wave)
 plt.plot(wave[:rate//2])
-sd.play(wave, blocking=True)
+sd.play(wave)
 plt.show()
+# sd.wait()
