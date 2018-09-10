@@ -8,7 +8,7 @@ SCALES = {
     'minor': (2,1,2,2,1,2,2),
     'major pentatonic': (2,2,3,2,3),
     'minor pentatonic': (3,2,2,3,2),
-    'chromatic': (1,) * 12,
+    'chromatic': (1,) * 11,
 }
 
 INTERVAL_NAMES = [
