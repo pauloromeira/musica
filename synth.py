@@ -5,17 +5,18 @@ from intervals import semitones, interval
 
 
 rate = 44100
-duration = .3
+duration = 1
+volume = 1
 
 sd.default.samplerate = rate
 
 scale = 'major'
 
 print(scale)
-for s in semitones(range(15), scale):
+for s in semitones(range(8), scale):
     f = frequency(s)
     i = interval(s)
     print(f'{s:02} {f:.2f} Hz : {i[0]} ({i[1]})')
-    wave = waveform(f, rate, duration)
+    wave = waveform(f, rate, duration, volume)
     crossfade(wave)
     sd.play(wave, blocking=True)
