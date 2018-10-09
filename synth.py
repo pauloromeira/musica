@@ -6,18 +6,22 @@ from utils import frequency, waveform, crossfade
 from intervals import semitones, interval
 from numpy import math
 
+from intervals import SCALES
+
 
 rate = 44100
 duration = 5
 volume = 1
 sd.default.samplerate = rate
 
-scale = 'minor'
+scale = 'major'
 
 print(scale)
-chord = [0,2,4]
-octaves = 3
-notes = chain.from_iterable((n+o*7 for n in chord) for o in range(octaves))
+chord = [0, 2, 4]
+octaves = 2
+notes = chain.from_iterable(
+    (n+o*len(SCALES[scale]) for n in chord) for o in range(octaves)
+)
 
 wave = None
 amplitude = math.sqrt(volume) / (len(chord) * octaves)
@@ -33,7 +37,7 @@ for s in semitones(notes, scale):
 
 
 crossfade(wave)
-plt.plot(wave[:rate//2])
+plt.plot(wave)
 sd.play(wave)
 plt.show()
 # sd.wait()
